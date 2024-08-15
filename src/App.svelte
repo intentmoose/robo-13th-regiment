@@ -25,33 +25,69 @@
 
     <!-- <Counter /> -->
     <a-scene>
-      <a-entity oculus-touch-controls="hand: left">
-        <a-entity class="gun-wrap" position="0 0 0" rotation="0 0 0">
-          {#each Array(20) as _, index (index)}
+        <a-entity oculus-touch-controls="hand: left">
+          <a-entity class="gun-wrap" position="0 0 0" rotation="0 0 0">
+            {#each Array(20) as _, index (index)}
+              <a-plane
+                position={`0.00${index} 0 0`}
+                rotation="0 -90 0"
+                width="2"
+                height="0.5"
+                canvas-material={`width:1024; height:${1024 / 5}`}
+                canvas-text={` text: ${gun3}; ${gun1Style} `}
+              >
+              </a-plane>
+            {/each}
+  
             <a-plane
-              position={`0.0${index} 0 0`}
-              rotation="0 -90 0"
-              width="2"
-              height="0.5"
-              canvas-material={`width:1024; height:${1024 / 5}`}
-              canvas-text={` text: ${gun3}; ${gun1Style} `}
-            >
-            </a-plane>
-          {/each}
-
-          <a-plane
-            position="0 1 0.1"
-            rotation="0 0 0"
-            width="0.1"
-            height="0.1"
-            canvas-material={`width:512; height:512`}
-            canvas-text={`
-      text: ${scope}; ${gun1Style} `}
-          ></a-plane>
-        </a-entity></a-entity>
-      <a-entity oculus-touch-controls="hand: right"></a-entity>
+              position="0 1 0.1"
+              rotation="0 0 0"
+              width="0.1"
+              height="0.1"
+              canvas-material={`width:512; height:512`}
+              canvas-text={`
+        text: ${scope}; ${gun1Style} `}
+            ></a-plane>
+          </a-entity>
+        </a-entity>
+        <a-entity oculus-touch-controls="hand: right">
+          <a-entity class="gun-wrap" position="0 0.1 0" rotation="0 0 0">
+            {#each Array(20) as _, index (index)}
+              <a-plane
+                position={`0.00${index} 0 0`}
+                rotation="0 90 0"
+                width="2"
+                height="0.5"
+                canvas-material={`width:1024; height:${1024 / 5}`}
+                canvas-text={` text: ${gun2}; ${gun1Style} `}
+              >
+              </a-plane>
+            {/each}
+  
+            {#each Array(10) as _, index (index)}
+              <a-plane
+              position={`0 -0.035 0.00${index}`}
+              rotation="0 0 0"
+              width="0.3"
+              height="0.3"
+              canvas-material={`width:512; height:512`}
+              canvas-text={`
+        text: ${scope}; ${gun1Style} `}
+            ></a-plane>
+            {/each}
+          </a-entity>
+        </a-entity>
 
       <!-- <a-plana -->
+      <a-entity
+        position="0 1 -3"
+        rotation="0 0 0"
+        scale="1 1 1"
+        material="color: red"
+        geometry="primitive: plane; width: 2; height: 2"
+        canvas-material={`width:1024; height:${1024}`}
+        canvas-text={` text: 🞖; font: 500px sans-serif; textAlign: center; textBaseline: middle;ext `}
+      ></a-entity>
 
       <a-sky color="#ECECEC" src={sky}></a-sky>
     </a-scene>
