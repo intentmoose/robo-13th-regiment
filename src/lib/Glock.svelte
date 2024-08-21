@@ -1,10 +1,9 @@
 <script>
-  import { onMount } from "svelte";
   const gun1 = `︻デ═一`;
   const gun2 = `︻╦╤─`;
   const gun3 = `🔫`;
   const gun1Style = `font: 100px sans-serif; fillStyle: #000; textAlign: center; textBaseline: middle;`;
-
+import pistol from "../assets/Pistol_5.glb"
   const handType = (index) => {
     return index === 0 ? "left" : "right";
   };
@@ -86,7 +85,7 @@
     <a-gltf-model
       position="0 0 0"
       rotation="0 90 0"
-      src="./src/assets/Pistol_5.glb"
+      src={pistol}
     >
       <a-plane
         position=".17 .04 0"
