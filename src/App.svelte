@@ -1,17 +1,19 @@
 <script>
+
   // import svelteLogo from './assets/svelte.svg'
   // import viteLogo from '/vite.svg'
   // import Counter from './lib/Counter.svelte'
-  import sky from "./assets/sky.webp";
+  // import sky from "./assets/sky.webp";
+  
   import "./assets/js/canvas-text-v2.js";
   import "./assets/js/aframe-canvas.js";
-
-  // const scope ="⚙"
-  const scope = "☉";
-  const gun1 = `︻デ═一`;
-  const gun2 = `︻╦╤─`;
-  const gun3 = `🔫`;
-  const gun1Style = `font: 100px sans-serif; fillStyle: #000; textAlign: center; textBaseline: middle;`;
+  import "./assets/js/enemy.js"
+  import Glock from "./lib/Glock.svelte";
+  import Targets from "./lib/Targets.svelte";
+  // import Targets from "./lib/Targets.svelte";
+  // import "./assets/js/glock-texture.js";
+  
+  // Texture generation code from previous examples
 </script>
 
 <main>
@@ -22,50 +24,54 @@
     <a href="https://svelte.dev" target="_blank" rel="noreferrer">
       <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
     </a> -->
+    <!-- style="display:none;" -->
 
     <!-- <Counter /> -->
-    <a-scene>
-        <a-entity oculus-touch-controls="hand: left">
-          <a-entity class="gun-wrap" position="0 0 0" rotation="0 0 0">
-            {#each Array(20) as _, index (index)}
-              <a-plane
-                position={`0.00${index} 0 0`}
-                rotation="0 -90 0"
-                width="2"
-                height="0.5"
-                canvas-material={`width:1024; height:${1024 / 5}`}
-                canvas-text={` text: ${gun3}; ${gun1Style} `}
-              >
-              </a-plane>
-            {/each}
-  
+     
+    <a-scene stats>
+
+
+      <!-- <a-entity oculus-touch-controls="hand: left">
+        <a-entity class="gun-wrap" position="0 0 0" rotation="0 0 0">
+          {#each Array(20) as _, index (index)}
             <a-plane
-              position="0 1 0.1"
-              rotation="0 0 0"
-              width="0.1"
-              height="0.1"
-              canvas-material={`width:512; height:512`}
-              canvas-text={`
+              position={`0.00${index} 0 0`}A
+              rotation="0 -90 0"
+              width="2"
+              height="0.5"
+              canvas-material={`width:1024; height:${1024 / 5}`}
+              canvas-text={` text: ${gun3}; ${gun1Style} `}
+            >
+            </a-plane>
+          {/each}
+
+          <a-plane
+            position="0 1 0.1"
+            rotation="0 0 0"
+            width="0.1"
+            height="0.1"
+            canvas-material={`width:512; height:512`}
+            canvas-text={`
         text: ${scope}; ${gun1Style} `}
-            ></a-plane>
-          </a-entity>
+          ></a-plane>
         </a-entity>
-        <a-entity oculus-touch-controls="hand: right">
-          <a-entity class="gun-wrap" position="0 0.1 0" rotation="0 0 0">
-            {#each Array(20) as _, index (index)}
-              <a-plane
-                position={`0.00${index} 0 0`}
-                rotation="0 90 0"
-                width="2"
-                height="0.5"
-                canvas-material={`width:1024; height:${1024 / 5}`}
-                canvas-text={` text: ${gun2}; ${gun1Style} `}
-              >
-              </a-plane>
-            {/each}
-  
-            {#each Array(10) as _, index (index)}
-              <a-plane
+      </a-entity>
+      <a-entity oculus-touch-controls="hand: right">
+        <a-entity class="gun-wrap" position="0 0.1 0" rotation="0 0 0">
+          {#each Array(20) as _, index (index)}
+            <a-plane
+              position={`0.00${index} 0 0`}
+              rotation="0 90 0"
+              width="2"
+              height="0.5"
+              canvas-material={`width:1024; height:${1024 / 5}`}
+              canvas-text={` text: ${gun2}; ${gun1Style} `}
+            >
+            </a-plane>
+          {/each}
+
+          {#each Array(10) as _, index (index)}
+            <a-plane
               position={`0 -0.035 0.00${index}`}
               rotation="0 0 0"
               width="0.3"
@@ -74,12 +80,12 @@
               canvas-text={`
         text: ${scope}; ${gun1Style} `}
             ></a-plane>
-            {/each}
-          </a-entity>
+          {/each}
         </a-entity>
+      </a-entity> -->
 
       <!-- <a-plana -->
-      <a-entity
+      <!-- <a-entity
         position="0 1 -3"
         rotation="0 0 0"
         scale="1 1 1"
@@ -87,27 +93,12 @@
         geometry="primitive: plane; width: 2; height: 2"
         canvas-material={`width:1024; height:${1024}`}
         canvas-text={` text: 🞖; font: 500px sans-serif; textAlign: center; textBaseline: middle;ext `}
-      ></a-entity>
+      ></a-entity> -->
 
-      <a-sky color="#ECECEC" src={sky}></a-sky>
+      <!-- <a-cylinder color="cyan" segments-radial="6" scale="0.5 1 1"></a-cylinder> -->
+      <Targets />
+      <Glock />
+      <a-sky color="#ffffff" segments-width="8" segment-height="4"></a-sky>
     </a-scene>
   </div>
 </main>
-
-<style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
-</style>
