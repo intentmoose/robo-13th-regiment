@@ -3,23 +3,14 @@
   const gun2 = `︻╦╤─`;
   const gun3 = `🔫`;
   const gun1Style = `font: 100px sans-serif; fillStyle: #000; textAlign: center; textBaseline: middle;`;
-import pistol from "../assets/Pistol_5.glb"
+  import pistol from "../assets/Pistol_5.glb";
   const handType = (index) => {
     return index === 0 ? "left" : "right";
   };
 
   const gunAnimation = (gun) => {
     const bang = gun.children[0].children[0];
-    // console.log("bang", bang);
     bang.emit("bang");
-    // if (gun.hasAttribute("animation-mixer")) {
-    //   gun.components["animation-mixer"].playAction();
-    // } else {
-    //   gun.setAttribute(
-    //     "animation-mixer",
-    //     "clip: handgun_01_slider|Take 001|BaseLayer; loop: repeat;",
-    //   );
-    // }
   };
 
   const hideBang = (e) => {
@@ -30,15 +21,19 @@ import pistol from "../assets/Pistol_5.glb"
     console.log("bang");
     const gun = e.target;
     console.log("gun", gun);
-    // const raycasterEl = e.target.children[0].children[0];
+    const raycasterEl = e.target.querySelector(".gun-raycaster");
     gunAnimation(gun);
+    console.log("raycasterEl", raycasterEl.components.raycaster.intersections);
+
     // scoreStore.decrementScore(1);
 
     // when shot is fired, check for intersection with bandit
-    // if (raycasterEl.components.raycaster.intersections.length === 0) {
-    //   return;
-    // }
-
+    if (raycasterEl.components.raycaster.intersections.length === 0) {
+      return;
+    }
+    console.log(raycasterEl.components.raycaster.intersections[0].object);
+    
+    raycasterEl.components.raycaster.intersections[0].object.visible = false;
     // createIntersectionEntity(
     //   raycasterEl.components.raycaster.intersections[0].point,
     // );
@@ -82,11 +77,7 @@ import pistol from "../assets/Pistol_5.glb"
     on:triggerdown={gunshot}
     haptics="events: triggerdown; dur: 200; force: 0.5"
   >
-    <a-gltf-model
-      position="0 0 0"
-      rotation="0 90 0"
-      src={pistol}
-    >
+    <a-gltf-model position="0 0 0" rotation="0 90 0" src={pistol}>
       <a-plane
         position=".17 .04 0"
         rotation="0 90 0"
@@ -107,6 +98,7 @@ import pistol from "../assets/Pistol_5.glb"
         color="gold"
       /> -->
       <a-entity
+        class="gun-raycaster"
         raycaster="objects: .target; showLine: true; lineColor:red; far: 40; autoRefresh: true; enabled: true"
         position="-.05 .07 0"
         rotation="0 -90 0"
