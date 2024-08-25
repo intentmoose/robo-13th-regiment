@@ -8,6 +8,7 @@
   import "./assets/js/canvas-text-v2.js";
   import "./assets/js/aframe-canvas.js";
   import "./assets/js/enemy.js"
+  import "./assets/js/grid.js";
   import Glock from "./lib/Glock.svelte";
   import Targets from "./lib/Targets.svelte";
   // import Targets from "./lib/Targets.svelte";
@@ -29,6 +30,10 @@
     <!-- <Counter /> -->
      
     <a-scene stats>
+
+      <a-entity gridhelper="size: 150; divisions: 150;"></a-entity>
+
+      
 
 
       <!-- <a-entity oculus-touch-controls="hand: left">
