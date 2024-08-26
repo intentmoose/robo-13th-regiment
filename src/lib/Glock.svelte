@@ -1,4 +1,7 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+  const dispatch = createEventDispatcher();
+
   const gun1 = `︻デ═一`;
   const gun2 = `︻╦╤─`;
   const gun3 = `🔫`;
@@ -18,58 +21,27 @@
   };
 
   const gunshot = (e) => {
-    console.log("bang");
     const gun = e.target;
-    console.log("gun", gun);
     const raycasterEl = e.target.querySelector(".gun-raycaster");
     gunAnimation(gun);
-    console.log("raycasterEl", raycasterEl.components.raycaster.intersections);
 
-    // scoreStore.decrementScore(1);
-
-    // when shot is fired, check for intersection with bandit
     if (raycasterEl.components.raycaster.intersections.length === 0) {
       return;
     }
-    console.log(raycasterEl.components.raycaster.intersections[0].object);
-    
-    raycasterEl.components.raycaster.intersections[0].object.visible = false;
-    // createIntersectionEntity(
-    //   raycasterEl.components.raycaster.intersections[0].point,
-    // );
 
-    // raycasterEl.components.raycaster.intersections[0].object.el.emit(
-    //   "drop-target",
-    // );
+    const target = raycasterEl.components.raycaster.intersections[0].object.el;
 
-    // scoreStore.incrementScore(5);
-  };
+    // Hide the target when hit
+    target.setAttribute('visible', 'false');
 
-  const createIntersectionEntity = (position) => {
-    const intersectionEntity = document.createElement("a-image");
-
-    intersectionEntity.setAttribute("src", "bullet_hole.webp");
-    intersectionEntity.setAttribute("scale", "0.15 0.15 0.15");
-    intersectionEntity.setAttribute("position", position); // Set the position of the sphere to the intersection point
-
-    // Append the entity to the A-Frame scene
-    const scene = document.querySelector("a-scene"); // Select the A-Frame scene
-    scene.appendChild(intersectionEntity); // Append the new entity to the scene
+    // Emit a custom event to update the score
+    dispatch('hit');
   };
 
   const animationFinished = (e) => {
     e.target.components["animation-mixer"].stopAction();
   };
 </script>
-
-<!-- A-Frame element to load the Glock model and apply the texture -->
-<!-- <canvas
-  bind:this={htmlCanvas}
-  on:loaded={htmlCanvasLoaded}
-  id="glockTexture"
-  width="512"
-  height="512"
-/> -->
 
 {#each Array(2) as _, index (index)}
   <a-entity
@@ -89,14 +61,7 @@
         on:animationcomplete={hideBang}
         scale="0 0 0"
       ></a-plane>
-      <!-- <a-cylinder
-        class="jacket"
-        position=".083 .07 0"
-        rotation="0 0 90"
-        radius=".008"
-        height=".026"
-        color="gold"
-      /> -->
+
       <a-entity
         class="gun-raycaster"
         raycaster="objects: .target; showLine: true; lineColor:red; far: 40; autoRefresh: true; enabled: true"

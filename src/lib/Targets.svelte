@@ -1,5 +1,7 @@
 <script>
-    import { onMount } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
+
+    const dispatch = createEventDispatcher();
 
     let enemies = [
         { id: "enemy-1" },
@@ -18,18 +20,62 @@
         }
     }
 
+    function resetTarget(target) {
+        target.setAttribute(
+            "position",
+            `${Math.random() * 10 - 5} ${Math.random() * 5 + 1} -10`,
+        );
+        target.setAttribute("visible", "true");
+        target.emit("start-animation"); // Emit the event to restart the animation
+    }
+
+    function handleAnimationEnd(event) {
+        const target = event.target;
+        dispatch("miss");
+        resetTarget(target); // Respawn the target after it hits the death zone
+    }
+
+    function handleTargetHit(event) {
+        const target = event.target;
+        target.setAttribute("visible", "false"); // Temporarily hide the target
+        dispatch("hit");
+        resetTarget(target); // Respawn the target after it is hit
+    }
+
+    function startAllAnimations() {
+        enemies.forEach((enemy, index) => {
+            const targetEl = document.querySelector(`.enemy-${index}`);
+            if (targetEl) {
+                targetEl.emit("start-animation");
+            }
+        });
+    }
+
+    const typesOfEnemies = ["fire", "ice", "shamrock", "metal"];
+
     onMount(() => {
         generateEnemies();
+        startAllAnimations(); // Start all animations at the beginning
     });
 </script>
 
 {#each enemies as enemy, index}
     <a-circle
         class={`enemy-${index} target`}
-        position={`${Math.random() * 10 - 5} ${Math.random() * 5 + 1} ${Math.random() * -10}`}
+        position={`${Math.random() * 10 - 5} ${Math.random() * 5 + 1} -10`}
         canvas-material={`width:200; height:200; byId: true; id: ${enemy.id}`}
-        canvas-enemy={`type: metal; size: 200`}
+        canvas-enemy={`type: ${
+            typesOfEnemies[Math.floor(Math.random() * typesOfEnemies.length)]
+        }; size: 200`}
         width="2"
         height="2"
-    ></a-circle>
+        animation="startEvents: start-animation; property: position; to: ${Math.random() *
+            2 -
+            1} ${Math.random() * 2} 0; dur: 5000; easing: linear; loop: false"
+        on:animationcomplete={handleAnimationEnd}
+        on:hit={handleTargetHit}
+        on:loaded={startAllAnimations}
+        visible="true"
+    >
+    </a-circle>
 {/each}
