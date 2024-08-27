@@ -23,9 +23,13 @@
     function resetTarget(target) {
         target.setAttribute(
             "position",
-            `${Math.random() * 10 - 5} ${Math.random() * 5 + 1} -10`,
+            randomizePosition(),
         );
-        target.setAttribute("visible", "true");
+        target.removeAttribute("canvas-enemy");
+        target.setAttribute("canvas-enemy", `type: ${
+            typesOfEnemies[Math.floor(Math.random() * typesOfEnemies.length)]
+        }; size: 200`);
+        // target.setAttribute("visible", "true");
         target.emit("start-animation"); // Emit the event to restart the animation
     }
 
@@ -36,9 +40,12 @@
     }
 
     function handleTargetHit(event) {
+        console.log(event);
+        
         const target = event.target;
-        target.setAttribute("visible", "false"); // Temporarily hide the target
+        // target.setAttribute("visible", "false"); // Temporarily hide the target
         dispatch("hit");
+  
         resetTarget(target); // Respawn the target after it is hit
     }
 
@@ -51,6 +58,10 @@
         });
     }
 
+    const randomizePosition = () => {
+        return `${Math.random() * 10 - 5} ${Math.random() * 10 + 1} ${(Math.random() * -100) -10}`;
+    };
+
     const typesOfEnemies = ["fire", "ice", "shamrock", "metal"];
 
     onMount(() => {
@@ -62,16 +73,16 @@
 {#each enemies as enemy, index}
     <a-circle
         class={`enemy-${index} target`}
-        position={`${Math.random() * 10 - 5} ${Math.random() * 5 + 1} -10`}
+        position={randomizePosition()}
         canvas-material={`width:200; height:200; byId: true; id: ${enemy.id}`}
+        width="2"
+        height="2"
         canvas-enemy={`type: ${
             typesOfEnemies[Math.floor(Math.random() * typesOfEnemies.length)]
         }; size: 200`}
-        width="2"
-        height="2"
-        animation="startEvents: start-animation; property: position; to: ${Math.random() *
+        animation={`startEvents: start-animation; property: position; to: ${Math.random() *
             2 -
-            1} ${Math.random() * 2} 0; dur: 5000; easing: linear; loop: false"
+            1} ${Math.random() * 2} 0; dur: 5000; easing: linear; loop: false`}
         on:animationcomplete={handleAnimationEnd}
         on:hit={handleTargetHit}
         on:loaded={startAllAnimations}

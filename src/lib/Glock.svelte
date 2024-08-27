@@ -32,9 +32,10 @@
     const target = raycasterEl.components.raycaster.intersections[0].object.el;
 
     // Hide the target when hit
-    target.setAttribute('visible', 'false');
+    // target.setAttribute('visible', 'false');
 
     // Emit a custom event to update the score
+    target.emit("hit");
     dispatch('hit');
   };
 

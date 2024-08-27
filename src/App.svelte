@@ -26,7 +26,7 @@
   <a-scene stats background="color: white" fog="type: linear; color: #AAA">
     <!-- make a cube out of grids -->
     <a-entity position="0 0 0" gridhelper="size: 50; divisions: 50;">
-      <a-entity
+      <!-- <a-entity
         position="25 0 0"
         rotation="0 90 0"
         gridhelper="size: 50; divisions: 50;"
@@ -45,8 +45,8 @@
         position="0 0 -25"
         rotation="90 0 0"
         gridhelper="size: 50; divisions: 50;"
-      /></a-entity
-    >
+      /> -->
+    </a-entity>
 
     <a-text value={score} position="0 2 -5" scale="10 10 10"></a-text>
 
