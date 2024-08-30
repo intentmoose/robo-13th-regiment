@@ -78,10 +78,7 @@
         position={randomizePosition()}
         width="2"
         height="2"
-        canvas-material={`width:200; height:200; byId: true; id: ${enemy.id}`}
-        canvas-enemy={`type: ${
-            typesOfEnemies[Math.floor(Math.random() * typesOfEnemies.length)]
-        }; size: 200`}
+x
         animation={`startEvents: start-animation; property: position; to: ${
             Math.random() * 2 - 1
         } ${Math.random() * 2} 0; dur: 5000; easing: linear; loop: false`}

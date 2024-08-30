@@ -23,23 +23,32 @@
     Score: {score}
   </div>
 
-  <a-scene stats background="color: green" >
+  <a-scene
+    stats
+    background="color: green"
+    renderer="antialias: true; colorManagement: true;"
+  >
     <!-- make a cube out of grids -->
     <!-- <a-entity position="0 0 0" gridhelper="size: 50; divisions: 50;"> -->
 
     <!-- <a-entity geometry="primitive: cylinder; radius: 20; height: 200; segmentsRadial: 4; open-ended: true"
       material="shader: outdoor-sky; side: double"
       position="0 1.5 -10" rotation="90 180 0"></a-entity> -->
-    <!-- <a-entity geometry="primitive: cylinder; radius: 20; height: 200; segmentsRadial: 4; open-ended: true"
+    <a-entity
+      geometry="primitive: cylinder; radius: 20; height: 200; segmentsRadial: 4; open-ended: true"
       material="shader: glowing-grid-tunnel; side: double"
-      position="0 1.5 -10" rotation="90 180 0"></a-entity> -->
-    <a-image material="shader: glowing-grid-tunnel; side: double" position="0 0 -5" rotation="90 180 0" width="50" height="50"></a-image>
+      position="0 1.5 -10"
+      rotation="90 180 0"
+    ></a-entity>
+    <!-- <a-image material="shader: glowing-grid-tunnel; side: double" position="0 0 -5" rotation="90 180 0" width="50" height="50"></a-image> -->
+    <!-- <a-image material="shader: custom-grid-shader; side: double" position="0 0 -5" rotation="90 180 0" width="50" height="50"></a-image> -->
 
     <!-- <a-sky rotation="90 0 0" material="shader: glowing-grid-tunnel;"></a-sky> -->
-    <a-sky rotation="0 0 0" material="shader: gradient-skybox;"></a-sky>
+    <!-- <a-sky rotation="0 0 0" material="shader: gradient-skybox;"></a-sky> -->
     <!-- <a-sky rotation="0 0 0" material="shader: outdoor-sky;"></a-sky> -->
     <!-- <a-entity
-      geometry="primitive: box; depth: 30; height: 30; width: 30"
+      geometry="primitive: box; depth: 30; 
+      height: 30; width: 30"
       material="shader: outdoor-sky; side: double"
       position="0 0 -20"
     ></a-entity> -->

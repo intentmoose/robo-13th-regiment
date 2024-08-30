@@ -47,7 +47,9 @@
 {#each Array(2) as _, index (index)}
   <a-entity
     oculus-touch-controls={`hand: ${handType(index)}; model: true;`}
+    hand-tracking-controls={`hand: ${handType(index)};`}
     on:triggerdown={gunshot}
+    on:pinchstarted={gunshot}
     haptics="events: triggerdown; dur: 200; force: 0.5"
   >
     <a-gltf-model position="0 0 0" rotation="0 90 0" src={pistol}>
