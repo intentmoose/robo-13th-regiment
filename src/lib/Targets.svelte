@@ -21,14 +21,16 @@
     }
 
     function resetTarget(target) {
-        target.setAttribute(
-            "position",
-            randomizePosition(),
-        );
+        target.setAttribute("position", randomizePosition());
         target.removeAttribute("canvas-enemy");
-        target.setAttribute("canvas-enemy", `type: ${
-            typesOfEnemies[Math.floor(Math.random() * typesOfEnemies.length)]
-        }; size: 200`);
+        target.setAttribute(
+            "canvas-enemy",
+            `type: ${
+                typesOfEnemies[
+                    Math.floor(Math.random() * typesOfEnemies.length)
+                ]
+            }; size: 200`,
+        );
         // target.setAttribute("visible", "true");
         target.emit("start-animation"); // Emit the event to restart the animation
     }
@@ -41,11 +43,11 @@
 
     function handleTargetHit(event) {
         console.log(event);
-        
+
         const target = event.target;
         // target.setAttribute("visible", "false"); // Temporarily hide the target
         dispatch("hit");
-  
+
         resetTarget(target); // Respawn the target after it is hit
     }
 
@@ -59,7 +61,7 @@
     }
 
     const randomizePosition = () => {
-        return `${Math.random() * 10 - 5} ${Math.random() * 10 + 1} ${(Math.random() * -100) -10}`;
+        return `${Math.random() * 26 - 5} 0.2 ${Math.random() * -100 - 10}`;
     };
 
     const typesOfEnemies = ["fire", "ice", "shamrock", "metal"];
@@ -74,19 +76,29 @@
     <a-circle
         class={`enemy-${index} target`}
         position={randomizePosition()}
-        canvas-material={`width:200; height:200; byId: true; id: ${enemy.id}`}
         width="2"
         height="2"
+        canvas-material={`width:200; height:200; byId: true; id: ${enemy.id}`}
         canvas-enemy={`type: ${
             typesOfEnemies[Math.floor(Math.random() * typesOfEnemies.length)]
         }; size: 200`}
-        animation={`startEvents: start-animation; property: position; to: ${Math.random() *
-            2 -
-            1} ${Math.random() * 2} 0; dur: 5000; easing: linear; loop: false`}
+        animation={`startEvents: start-animation; property: position; to: ${
+            Math.random() * 2 - 1
+        } ${Math.random() * 2} 0; dur: 5000; easing: linear; loop: false`}
         on:animationcomplete={handleAnimationEnd}
         on:hit={handleTargetHit}
         on:loaded={startAllAnimations}
         visible="true"
     >
+        <a-plane
+            position="0 0.5 0.5"
+            rotation="0 10 90"
+            side="double"
+            width="2"
+            height="2"
+            canvas-material={`width:2048; height:2048`}
+            canvas-text={` text: 🔪; font: 550px sans-serif; textAlign: center; textBaseline: middle; `}
+        />
     </a-circle>
 {/each}
+<!-- text="value:55;align:center;color:black;width: 10" -->

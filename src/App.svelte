@@ -3,7 +3,7 @@
   import "./assets/js/aframe-canvas.js";
   import "./assets/js/enemy.js";
   import "./assets/js/grid.js";
-  // import "./assets/js/sky.js";
+
   import Glock from "./lib/Glock.svelte";
   import Targets from "./lib/Targets.svelte";
 
@@ -23,10 +23,28 @@
     Score: {score}
   </div>
 
-  <a-scene stats background="color: white" fog="type: linear; color: #AAA">
+  <a-scene stats background="color: green" >
     <!-- make a cube out of grids -->
-    <a-entity position="0 0 0" gridhelper="size: 50; divisions: 50;">
-      <!-- <a-entity
+    <!-- <a-entity position="0 0 0" gridhelper="size: 50; divisions: 50;"> -->
+
+    <!-- <a-entity geometry="primitive: cylinder; radius: 20; height: 200; segmentsRadial: 4; open-ended: true"
+      material="shader: outdoor-sky; side: double"
+      position="0 1.5 -10" rotation="90 180 0"></a-entity> -->
+    <!-- <a-entity geometry="primitive: cylinder; radius: 20; height: 200; segmentsRadial: 4; open-ended: true"
+      material="shader: glowing-grid-tunnel; side: double"
+      position="0 1.5 -10" rotation="90 180 0"></a-entity> -->
+    <a-image material="shader: glowing-grid-tunnel; side: double" position="0 0 -5" rotation="90 180 0" width="50" height="50"></a-image>
+
+    <!-- <a-sky rotation="90 0 0" material="shader: glowing-grid-tunnel;"></a-sky> -->
+    <a-sky rotation="0 0 0" material="shader: gradient-skybox;"></a-sky>
+    <!-- <a-sky rotation="0 0 0" material="shader: outdoor-sky;"></a-sky> -->
+    <!-- <a-entity
+      geometry="primitive: box; depth: 30; height: 30; width: 30"
+      material="shader: outdoor-sky; side: double"
+      position="0 0 -20"
+    ></a-entity> -->
+
+    <!-- <a-entity
         position="25 0 0"
         rotation="0 90 0"
         gridhelper="size: 50; divisions: 50;"
@@ -46,7 +64,6 @@
         rotation="90 0 0"
         gridhelper="size: 50; divisions: 50;"
       /> -->
-    </a-entity>
 
     <a-text value={score} position="0 2 -5" scale="10 10 10"></a-text>
 
