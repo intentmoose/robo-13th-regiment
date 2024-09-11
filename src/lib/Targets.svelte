@@ -11,6 +11,26 @@
         { id: "enemy-5" },
     ];
 
+    const weapons = [
+        "🗡️", // Dagger
+        "🔪", // Kitchen Knife
+        "🪓", // Axe
+        "🛡️", // Shield
+        "🪚", // Saw
+        "🪛", // Screwdriver
+        "🔧", // Wrench
+        "🔨", // Hammer
+        "🪤", // Mouse Trap
+        "🧲", // Magnet
+        "🧯", // Fire Extinguisher
+        "🧹", // Broom
+        "🦯", // White Cane
+        "🧱", // Brick
+        "🪝", // Hook
+        "📏", // Straight Ruler
+        "🦴", // Bone
+    ];
+
     const enemyCount = 5;
 
     // Generate enemies
@@ -22,18 +42,23 @@
 
     function resetTarget(target) {
         target.setAttribute("position", randomizePosition());
-        target.removeAttribute("canvas-enemy");
-        target.setAttribute(
-            "canvas-enemy",
-            `type: ${
-                typesOfEnemies[
-                    Math.floor(Math.random() * typesOfEnemies.length)
-                ]
-            }; size: 200`,
-        );
+        let el = target.querySelector(".weapon");
+
+        el.removeAttribute("canvas-text");
+
+        console.log(target);
+
+        el.setAttribute("canvas-text", drawWeapon());
+
         // target.setAttribute("visible", "true");
         target.emit("start-animation"); // Emit the event to restart the animation
     }
+
+    const drawWeapon = () => {
+        return `text: ${
+            weapons[Math.floor(Math.random() * weapons.length)]
+        };font: 1300px  sans-serif; textAlign: center; textBaseline: middle;`;
+    };
 
     function handleAnimationEnd(event) {
         const target = event.target;
@@ -64,8 +89,6 @@
         return `${Math.random() * 26 - 5} 0.2 ${Math.random() * -100 - 10}`;
     };
 
-    const typesOfEnemies = ["fire", "ice", "shamrock", "metal"];
-
     onMount(() => {
         generateEnemies();
         startAllAnimations(); // Start all animations at the beginning
@@ -78,7 +101,6 @@
         position={randomizePosition()}
         width="2"
         height="2"
-x
         animation={`startEvents: start-animation; property: position; to: ${
             Math.random() * 2 - 1
         } ${Math.random() * 2} 0; dur: 5000; easing: linear; loop: false`}
@@ -86,16 +108,48 @@ x
         on:hit={handleTargetHit}
         on:loaded={startAllAnimations}
         visible="true"
+        text="value:13;align:center;color:black;width: 26"
+        alphaTest="0.5"
+        canvas-material={`width:2048; height:2048`}
+        canvas-text={drawWeapon()}
     >
-        <a-plane
-            position="0 0.5 0.5"
-            rotation="0 10 90"
+        <!-- <a-image
+            value="13"
+            width="1"
+            height="1"
+            position="0 0 0.1"
+            rotation="0 0 0"
+            color="black"
+            canvas-material={`width:2048; height:2048`}
+            canvas-text={'text: 13; font: 1300px  sans-serif; textAlign: center; textBaseline: middle;'}
+        /> -->
+        
+        <a-image
+            class="weapon"
+            alphaTest="0.5"
+            position="-1.3 3.5 0.04"
+            rotation="0 0 0"
             side="double"
             width="2"
             height="2"
             canvas-material={`width:2048; height:2048`}
-            canvas-text={` text: 🔪; font: 550px sans-serif; textAlign: center; textBaseline: middle; `}
+            canvas-text={drawWeapon()}
         />
+        {#each Array(2) as _, i}
+            <a-entity
+                position={`${i === 0 ? 0.7 : -0.7} 0 0`}
+                rotation={i === 0 ? "0 0 0" : "0 180 0"}
+                animation={`property: rotation; to: 30 0 0; dur: 500; loop: true; dir: alternate`}
+            >
+                <!-- <a-plane
+                    position="0 -1.5 0"
+                    side="double"
+                    width="2"
+                    height="2"
+                    canvas-material={`width:2048; height:2048`}
+                    canvas-text={` text: 🦵; font: 1000px sans-serif; textAlign: center; textBaseline: middle; `}
+                /> -->
+            </a-entity>
+        {/each}
     </a-circle>
 {/each}
-<!-- text="value:55;align:center;color:black;width: 10" -->
