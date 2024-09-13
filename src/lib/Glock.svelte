@@ -2,10 +2,6 @@
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
-  const gun1 = `︻デ═一`;
-  const gun2 = `︻╦╤─`;
-  const gun3 = `🔫`;
-  const gun1Style = `font: 100px sans-serif; fillStyle: #000; textAlign: center; textBaseline: middle;`;
   import pistol from "../assets/Pistol_5.glb";
   const handType = (index) => {
     return index === 0 ? "left" : "right";
@@ -34,25 +30,20 @@
     // Hide the target when hit
     // target.setAttribute('visible', 'false');
 
-    // Emit a custom event to update the score
     target.emit("hit");
-    dispatch('hit');
-  };
-
-  const animationFinished = (e) => {
-    e.target.components["animation-mixer"].stopAction();
+    dispatch("hit");
   };
 </script>
 
 {#each Array(2) as _, index (index)}
   <a-entity
-    oculus-touch-controls={`hand: ${handType(index)}; model: true;`}
-    hand-tracking-controls={`hand: ${handType(index)};`}
+    oculus-touch-controls={`hand: ${handType(index)}; model: false;`}
     on:triggerdown={gunshot}
     on:pinchstarted={gunshot}
     haptics="events: triggerdown; dur: 200; force: 0.5"
   >
-    <a-gltf-model position="0 0 0" rotation="0 90 0" src={pistol}>
+    <!-- hand-tracking-controls={`hand: ${handType(index)};`} -->
+    <a-gltf-model position="0 0 0" rotation="0 90 -45" src={pistol}>
       <a-plane
         position=".17 .04 0"
         rotation="0 90 0"

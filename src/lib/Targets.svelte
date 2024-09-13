@@ -3,13 +3,7 @@
 
     const dispatch = createEventDispatcher();
 
-    let enemies = [
-        { id: "enemy-1" },
-        { id: "enemy-2" },
-        { id: "enemy-3" },
-        { id: "enemy-4" },
-        { id: "enemy-5" },
-    ];
+    let enemies = [{}, {}, {}, {}, {}];
 
     const weapons = [
         "🗡️", // Dagger
@@ -31,24 +25,24 @@
         "🦴", // Bone
     ];
 
-    const enemyCount = 5;
+    // const enemyCount = 5;
 
     // Generate enemies
-    function generateEnemies() {
-        for (let i = 0; i < enemyCount; i++) {
-            enemies.push({ id: `enemy-${i}` });
-        }
-    }
+    // function generateEnemies() {
+    //     for (let i = 0; i < enemyCount; i++) {
+    //         enemies.push({ id: `enemy-${i}` });
+    //     }
+    // }
 
     function resetTarget(target) {
         target.setAttribute("position", randomizePosition());
-        let el = target.querySelector(".weapon");
+        // let el = target.querySelector(".weapon");
 
-        el.removeAttribute("canvas-text");
+        // el.removeAttribute("canvas-text");
 
-        console.log(target);
+        // console.log(target);
 
-        el.setAttribute("canvas-text", drawWeapon());
+        // el.setAttribute("canvas-text", drawWeapon());
 
         // target.setAttribute("visible", "true");
         target.emit("start-animation"); // Emit the event to restart the animation
@@ -67,7 +61,7 @@
     }
 
     function handleTargetHit(event) {
-        console.log(event);
+        // console.log(event);
 
         const target = event.target;
         // target.setAttribute("visible", "false"); // Temporarily hide the target
@@ -86,33 +80,35 @@
     }
 
     const randomizePosition = () => {
-        return `${Math.random() * 26 - 5} 0.2 ${Math.random() * -100 - 10}`;
+        return `${Math.random() * 26 - 5} -1 ${Math.random() * -100 - 10}`;
     };
 
     onMount(() => {
-        generateEnemies();
+        // generateEnemies();
         startAllAnimations(); // Start all animations at the beginning
     });
 </script>
 
 {#each enemies as enemy, index}
-    <a-circle
-        class={`enemy-${index} target`}
-        position={randomizePosition()}
-        width="2"
-        height="2"
-        animation={`startEvents: start-animation; property: position; to: ${
-            Math.random() * 2 - 1
-        } ${Math.random() * 2} 0; dur: 5000; easing: linear; loop: false`}
-        on:animationcomplete={handleAnimationEnd}
-        on:hit={handleTargetHit}
-        on:loaded={startAllAnimations}
-        visible="true"
-        text="value:13;align:center;color:black;width: 26"
-        alphaTest="0.5"
-        canvas-material={`width:2048; height:2048`}
-        canvas-text={drawWeapon()}
-    >
+    <!-- <a-entity> -->
+        <a-image
+            position={randomizePosition()}
+            animation={`startEvents: start-animation; property: position; to: ${
+                Math.random() * 2 - 1
+            } 0 ${Math.random() * 2}; dur: 5000; easing: linear; loop: false`}
+            class={`enemy-${index} target`}
+            width="1"
+            height="1"
+            on:animationcomplete={handleAnimationEnd}
+            on:hit={handleTargetHit}
+            on:loaded={startAllAnimations}
+            visible="true"
+            canvas-material={`width:2048; height:2048`}
+            canvas-text={"text: 🤖; font: 1300px sans-serif; textAlign: center; textBaseline: middle;"}
+        />
+        <!-- <a-text value="13" position="0 1 0" /> -->
+
+        <!-- text="value:13;align:center;color:black;width: 26" -->
         <!-- <a-image
             value="13"
             width="1"
@@ -123,33 +119,33 @@
             canvas-material={`width:2048; height:2048`}
             canvas-text={'text: 13; font: 1300px  sans-serif; textAlign: center; textBaseline: middle;'}
         /> -->
-        
-        <a-image
+
+        <!-- <a-image
             class="weapon"
             alphaTest="0.5"
-            position="-1.3 3.5 0.04"
+            position="-1.3 3.5 -0.1"
             rotation="0 0 0"
             side="double"
-            width="2"
-            height="2"
+            width="3"
+            height="3"
             canvas-material={`width:2048; height:2048`}
             canvas-text={drawWeapon()}
-        />
-        {#each Array(2) as _, i}
+        /> -->
+        <!-- {#each Array(2) as _, i}
             <a-entity
                 position={`${i === 0 ? 0.7 : -0.7} 0 0`}
                 rotation={i === 0 ? "0 0 0" : "0 180 0"}
                 animation={`property: rotation; to: 30 0 0; dur: 500; loop: true; dir: alternate`}
             >
-                <!-- <a-plane
+                <a-plane
                     position="0 -1.5 0"
                     side="double"
                     width="2"
                     height="2"
                     canvas-material={`width:2048; height:2048`}
                     canvas-text={` text: 🦵; font: 1000px sans-serif; textAlign: center; textBaseline: middle; `}
-                /> -->
+                />
             </a-entity>
-        {/each}
-    </a-circle>
+        {/each} -->
+    <!-- </a-entity> -->
 {/each}
